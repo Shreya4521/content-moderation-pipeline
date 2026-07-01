@@ -72,11 +72,13 @@ The bundled `sample_dataset.csv` is intentionally small (~40 rows) so the repo s
 3. Update `DATA_PATH` in `src/train_model.py` to point to it, and map its label columns to a single binary `label` column
 4. Re-run `python src/train_model.py`
 
-5. **Ingestion:** Text enters the system through the interactive Streamlit dashboard interface or via bulk batch CSV data uploads.
-6. **ML Classification:** The text payload runs through the machine learning model vectorizer, generating a toxicity prediction label accompanied by an explicit numerical confidence score.
-7. **Deterministic Evaluation:** Simultaneously, a rule-based engine evaluates the string for compliance flags including profanity content, blacklisted keywords, and sensitive PII markers.
-8. **Smart Privacy Routing:** If isolated PII data (emails or phone numbers) is caught in an otherwise safe string, a dedicated privacy layer activates **APPROVED** routing and handles data masking protocols instead of binary message blocking.
-9. **Traceable Audit Trails:** Every single algorithmic trigger score, classification feature weight, and final routing choice is immediately written to a local SQLite compliance logging database.
+### How it works
+
+1. **Ingestion:** Text enters the system through the interactive Streamlit dashboard interface or via bulk batch CSV data uploads.
+2. **ML Classification:** The text payload runs through the machine learning model vectorizer, generating a toxicity prediction label accompanied by an explicit numerical confidence score.
+3. **Deterministic Evaluation:** Simultaneously, a rule-based engine evaluates the string for compliance flags including profanity content, blacklisted keywords, and sensitive PII markers.
+4. **Smart Privacy Routing:** If isolated PII data (emails or phone numbers) is caught in an otherwise safe string, a dedicated privacy layer activates **APPROVED** routing and handles data masking protocols instead of binary message blocking.
+5. **Traceable Audit Trails:** Every single algorithmic trigger score, classification feature weight, and final routing choice is immediately written to a local SQLite compliance logging database.
 
 ## Possible extensions (good for a resume bullet or viva questions)
 
