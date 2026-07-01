@@ -17,7 +17,6 @@ Most fresher ML projects stop at "train a model, show accuracy." This one goes f
 - **Batch Moderation** — Upload a CSV of comments/reviews to process and analyze content compliance in bulk.
 - **Compliance Dashboard** — View live metric counters (Approved vs. Blocked), monitor chart trends, and export structured compliance audit reports.
 - **Hybrid Compliance Engine** — Combines a machine learning toxicity classifier with deterministic regex rule modules for multi-layered string validation.
--
 
 ## Tech Stack
 
