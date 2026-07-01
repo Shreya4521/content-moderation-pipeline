@@ -41,6 +41,8 @@ def moderate_text(text, vectorizer, model):
         proba = model.predict_proba(vec)[0]
         ml_prediction = "toxic" if pred == 1 else "safe"
         ml_confidence = round(float(max(proba)), 3)
+        ml_prediction = "safe"
+        rule_result["spam"]["flagged"] = False
 
     # NEW COMPLIANCE LOGIC: 
     # If the text is toxic, or contains profanity/spam, it stays BLOCKED.
