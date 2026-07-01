@@ -5,27 +5,29 @@ An end-to-end pipeline that moderates user-generated text using a **machine lear
 ## Why this project
 
 Most fresher ML projects stop at "train a model, show accuracy." This one goes further by simulating a **real production moderation system**:
+
 - ML model for toxicity detection
 - Deterministic rule engine for things ML often misses (PII, spam links)
 - Full audit logging (a compliance requirement in real systems — GDPR/DPDP style traceability)
 - A working dashboard to demo it live
 
-## Features
+### Features
 
-- **Single text moderation** — paste any text and get an instant Approve/Block decision
-- **Batch moderation** — upload a CSV of comments/reviews and moderate them all at once
-- **Compliance dashboard** — view stats (approved vs blocked), full audit log, and export a compliance report
-- **Hybrid detection** — ML classifier (TF-IDF + Logistic Regression) + regex-based rules for PII, spam, profanity
+- **Single Text Moderation & Privacy Sanitization** — Paste any text to get an instant decision. If personal records are leaked, the system automatically sanitizes the data stream rather than flat-blocking the user.
+- **Batch Moderation** — Upload a CSV of comments/reviews to process and analyze content compliance in bulk.
+- **Compliance Dashboard** — View live metric counters (Approved vs. Blocked), monitor chart trends, and export structured compliance audit reports.
+- **Hybrid Compliance Engine** — Combines a machine learning toxicity classifier with deterministic regex rule modules for multi-layered string validation.
+-
 
 ## Tech Stack
 
-| Layer | Tool |
-|---|---|
-| ML Model | scikit-learn (TF-IDF + Logistic Regression) |
-| Rule Engine | Python `re` (regex) |
-| Dashboard | Streamlit |
-| Audit Storage | SQLite |
-| Data | Sample dataset included (swap in Kaggle Jigsaw dataset for production quality) |
+| Layer         | Tool                                                                           |
+| ------------- | ------------------------------------------------------------------------------ |
+| ML Model      | scikit-learn (TF-IDF + Logistic Regression)                                    |
+| Rule Engine   | Python `re` (regex)                                                            |
+| Dashboard     | Streamlit                                                                      |
+| Audit Storage | SQLite                                                                         |
+| Data          | Sample dataset included (swap in Kaggle Jigsaw dataset for production quality) |
 
 ## Project Structure
 
@@ -71,13 +73,11 @@ The bundled `sample_dataset.csv` is intentionally small (~40 rows) so the repo s
 3. Update `DATA_PATH` in `src/train_model.py` to point to it, and map its label columns to a single binary `label` column
 4. Re-run `python src/train_model.py`
 
-## How it works
-
-1. Text comes in through the UI (single input or CSV upload)
-2. It's run through the **ML classifier**, producing a toxic/safe prediction with a confidence score
-3. It's simultaneously run through the **rule engine**, checking for emails/phone numbers (PII), spam links/keywords, and profanity
-4. If either the model flags it as toxic OR any rule fires, the content is marked `BLOCKED`
-5. Every decision — flagged or not — is written to a SQLite audit log with a timestamp, so there's a traceable compliance history
+5. **Ingestion:** Text enters the system through the interactive Streamlit dashboard interface or via bulk batch CSV data uploads.
+6. **ML Classification:** The text payload runs through the machine learning model vectorizer, generating a toxicity prediction label accompanied by an explicit numerical confidence score.
+7. **Deterministic Evaluation:** Simultaneously, a rule-based engine evaluates the string for compliance flags including profanity content, blacklisted keywords, and sensitive PII markers.
+8. **Smart Privacy Routing:** If isolated PII data (emails or phone numbers) is caught in an otherwise safe string, a dedicated privacy layer activates **APPROVED** routing and handles data masking protocols instead of binary message blocking.
+9. **Traceable Audit Trails:** Every single algorithmic trigger score, classification feature weight, and final routing choice is immediately written to a local SQLite compliance logging database.
 
 ## Possible extensions (good for a resume bullet or viva questions)
 
